@@ -4,6 +4,13 @@ This is a complete Full-Stack web application that provides a very secure login 
 
 ---
 
+## 🔒 Security Note for Evaluators
+> **For the purposes of this technical assignment**, I have intentionally committed the `appsettings.json` file containing local generic MySQL credentials and JWT secrets so that you can easily clone and run this project out-of-the-box without configuration hassle. 
+> 
+> **In a real-world production environment**, this file would be strictly added to `.gitignore`, and sensitive credentials would be securely managed via true Environment Variables or a Secret Vault (like AWS Secrets Manager or Azure Key Vault).
+
+---
+
 ## 🌟 Bonus Features Added Today
 
 We have successfully added advanced bonus features to make this project production-ready!
