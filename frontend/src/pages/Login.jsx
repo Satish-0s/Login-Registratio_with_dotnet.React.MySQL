@@ -34,15 +34,28 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const user = await login(formData.email, formData.password);
-      toast.success(`Welcome back, ${user.name}!`);
+      const data = await login(formData.email, formData.password);
+      const userData = data.user || data;
+      const sessionPayload = { ...userData, token: data.token };
+      
+      toast.success(`Welcome back, ${sessionPayload.name}!`);
+      
+      // Delay exactly 3 seconds so this appears perfectly right after the welcome toast exits
+      setTimeout(() => {
+        toast.success('Token generated successfully!');
+      }, 3000);
       
       const storageContext = rememberMe ? localStorage : sessionStorage;
-      storageContext.setItem('user', JSON.stringify(user));
+      storageContext.setItem('user', JSON.stringify(sessionPayload));
       
       navigate('/dashboard');
     } catch (err) {
-      toast.error(err.message || 'Invalid login credentials. Please try again.');
+      if (err.response?.status === 403) {
+        toast.error(err.response?.data?.message || 'Please verify your email.');
+        navigate('/verify-email', { state: { email: formData.email } });
+      } else {
+        toast.error(err.response?.data?.message || err.message || 'Invalid login credentials. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -72,7 +85,7 @@ const Login = () => {
           required 
         />
         
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', marginBottom: '1.5rem' }}>
           <input 
             type="checkbox" 
             id="rememberMe" 
@@ -88,8 +101,13 @@ const Login = () => {
         <Button type="submit" loading={loading}>
           Login
         </Button>
+        <div style={{ textAlign: 'right', marginTop: '0.75rem' }}>
+          <Link to="/forgot-password" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textDecoration: 'none' }}>
+            Forgot password?
+          </Link>
+        </div>
       </form>
-      <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+      <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
         <p style={{ fontSize: '0.875rem' }}>
           Don't have an account? <Link to="/register" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>Register now</Link>
         </p>

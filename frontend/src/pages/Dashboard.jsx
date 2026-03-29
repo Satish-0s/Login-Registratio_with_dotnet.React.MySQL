@@ -47,10 +47,13 @@ const Dashboard = () => {
   if (loading) return null;
 
   return (
-    <Layout title="Dashboard" subtitle="Your secure workspace">
+    <Layout title={user?.role === 'Admin' ? "Admin Dashboard" : "User Dashboard"} subtitle={user?.role === 'Admin' ? "Manage your platform securely" : "Your secure workspace"}>
       <div className="fade-in" style={{ textAlign: 'center', padding: '2rem 0' }}>
+        <div style={{ display: 'inline-block', padding: '0.25rem 0.75rem', background: user?.role === 'Admin' ? 'var(--primary)' : 'rgba(255,255,255,0.1)', color: user?.role === 'Admin' ? 'var(--primary-text)' : '#fff', borderRadius: '100px', fontSize: '0.75rem', fontWeight: 600, marginBottom: '1rem' }}>
+          {user?.role ? user.role.toUpperCase() : 'USER'}
+        </div>
         <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontWeight: 600 }}>
-          Welcome back, <span style={{ color: 'var(--primary)' }}>{user.name}</span>!
+          Welcome back, <span style={{ color: 'var(--primary)' }}>{user?.name}</span>!
         </h2>
         <p style={{ marginBottom: '2rem', color: 'var(--text-muted)' }}>
           You've successfully authenticated and accessed your secure dashboard.

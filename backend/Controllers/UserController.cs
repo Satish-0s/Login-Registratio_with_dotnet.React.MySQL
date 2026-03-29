@@ -38,7 +38,9 @@ namespace backend.Controllers
             {
                 Id = user.Id,
                 Name = user.Name,
-                Email = user.Email
+                Email = user.Email,
+                Role = user.Role,
+                IsEmailVerified = user.IsEmailVerified
             });
         }
     }

@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import { register } from '../services/auth';
 
 const Register = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'User' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -44,9 +44,9 @@ const Register = () => {
 
     setLoading(true);
     try {
-      await register({ name: formData.name, email: formData.email, password: formData.password });
-      toast.success('Registration successful! Please login.');
-      navigate('/login');
+      await register({ name: formData.name, email: formData.email, password: formData.password, role: formData.role });
+      toast.success('Registration successful! Please verify your email from the console.');
+      navigate('/verify-email', { state: { email: formData.email } });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Registration failed. Try again.');
     } finally {
@@ -96,6 +96,18 @@ const Register = () => {
           error={errors.confirmPassword}
           required
         />
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+          <input 
+            type="checkbox" 
+            id="isAdmin" 
+            checked={formData.role === 'Admin'}
+            onChange={(e) => setFormData(prev => ({ ...prev, role: e.target.checked ? 'Admin' : 'User' }))} 
+            style={{ marginRight: '0.5rem', accentColor: 'var(--primary)', cursor: 'pointer' }}
+          />
+          <label htmlFor="isAdmin" style={{ fontSize: '0.875rem', color: 'var(--text-muted)', cursor: 'pointer' }}>
+            Register as Admin
+          </label>
+        </div>
         <Button type="submit" loading={loading} className="mt-4">
           Register
         </Button>
