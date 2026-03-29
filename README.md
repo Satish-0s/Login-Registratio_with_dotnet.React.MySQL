@@ -78,3 +78,8 @@ The backend exposes these URLs for the frontend to communicate with:
 
 **Summary of the Flow:**
 User enters details -> Frontend sends POST request -> Backend checks DB and Hashes -> If good, Backend sends JWT Token -> Frontend saves Token -> Frontend uses Token to get Profile data -> User sees Dashboard!
+Here is my Pages
+<img width="1152" height="1083" alt="image" src="https://github.com/user-attachments/assets/da9db563-898c-4f62-b00f-7ed49e2679e0" />
+<img width="1114" height="968" alt="image" src="https://github.com/user-attachments/assets/15873144-5b2e-48eb-90b4-d7077614cb5b" />
+<img width="963" height="1035" alt="image" src="https://github.com/user-attachments/assets/d9ab9bdd-486e-4baf-be21-edb50428a562" />
+
